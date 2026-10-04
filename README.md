@@ -78,4 +78,7 @@ push. GitHub Pages redeploys automatically.
 
 - Fonts: Manrope and Inter, SIL Open Font License 1.1 (`public/fonts/*-OFL.txt`).
 - The LinkedIn In logo is LinkedIn's official artwork, used only to link to the profile.
+- Microsoft certification badges (`public/images/badges/`) are Microsoft's official artwork, unaltered, shown only for
+  credentials earned, with a trademark footnote on the page. Each certification's `level` in `profile.ts` picks its badge;
+  expired ones always show the Exam badge.
 - Code dependencies: Astro and @astrojs/sitemap (MIT); axe-core (MPL-2.0, development only).

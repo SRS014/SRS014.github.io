@@ -129,21 +129,25 @@ export const honors = [
 ];
 
 // 11 Microsoft certifications earned, 6 currently active. Expired ones are never shown as current.
+// level picks the official badge (public/images/badges/). Levels and exam codes checked on Microsoft Learn.
+export type CertLevel = "Expert" | "Associate" | "Fundamentals";
+export const certLevels: CertLevel[] = ["Expert", "Associate", "Fundamentals"];
 export const certifications = {
   active: [
-    { name: "Microsoft Certified: Agentic AI Business Solutions Architect", issued: "May 2026" },
-    { name: "Microsoft Certified: Power Automate RPA Developer Associate", issued: "February 2026" },
-    { name: "Microsoft 365 Certified: Copilot and Agent Administration Fundamentals", issued: "January 2026" },
-    { name: "Microsoft Certified: Dynamics 365 Fundamentals (ERP)", issued: "September 2025" },
-    { name: "Microsoft Certified: Power Platform Fundamentals", issued: "December 2022" },
-    { name: "Microsoft Certified: Azure Fundamentals", issued: "September 2022" },
+    { name: "Microsoft Certified: Agentic AI Business Solutions Architect Expert", exam: "AB-100", level: "Expert" as CertLevel, issued: "May 2026" },
+    { name: "Microsoft Certified: Power Automate RPA Developer Associate", exam: "PL-500", level: "Associate" as CertLevel, issued: "February 2026" },
+    { name: "Microsoft 365 Certified: Copilot and Agent Administration Fundamentals", exam: "AB-900", level: "Fundamentals" as CertLevel, issued: "January 2026" },
+    { name: "Microsoft Certified: Dynamics 365 Fundamentals (ERP)", exam: "MB-920", level: "Fundamentals" as CertLevel, issued: "September 2025" },
+    { name: "Microsoft Certified: Power Platform Fundamentals", exam: "PL-900", level: "Fundamentals" as CertLevel, issued: "December 2022" },
+    { name: "Microsoft Certified: Azure Fundamentals", exam: "AZ-900", level: "Fundamentals" as CertLevel, issued: "September 2022" },
   ],
+  // Expired: shown with the exam badge and an "Expired" label, never with a current-level badge.
   previous: [
-    "Power Platform Solution Architect Expert (PL-600)",
-    "Fabric Analytics Engineer Associate",
-    "Power Platform Developer Associate",
-    "Power Platform App Maker Associate",
-    "Power BI Data Analyst Associate",
+    { name: "Power Platform Solution Architect Expert", exam: "PL-600", level: "Expert" as CertLevel },
+    { name: "Fabric Analytics Engineer Associate", exam: "DP-600", level: "Associate" as CertLevel },
+    { name: "Power Platform Developer Associate", exam: "PL-400", level: "Associate" as CertLevel },
+    { name: "Power Platform App Maker Associate", exam: "PL-100", level: "Associate" as CertLevel },
+    { name: "Power BI Data Analyst Associate", exam: "PL-300", level: "Associate" as CertLevel },
   ],
   appliedSkills: [
     "Create and manage automated processes by using Power Automate",

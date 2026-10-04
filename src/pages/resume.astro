@@ -27,7 +27,7 @@ import { site, about, experience, education, certifications, resumeSummary } fro
 
       <h2>Certifications</h2>
       <p class="small muted" style="margin-bottom:6px">Active Microsoft certifications ({certifications.active.length} of {certifications.active.length + certifications.previous.length} earned):</p>
-      <ul class="list">{certifications.active.map((c) => <li>{c.name} ({c.issued})</li>)}</ul>
+      <ul class="list">{certifications.active.map((c) => <li>{c.name} ({c.exam}, {c.issued})</li>)}</ul>
       <p class="small muted" style="margin-bottom:6px">Microsoft Applied Skills:</p>
       <ul class="list">{certifications.appliedSkills.map((c) => <li>{c}</li>)}</ul>
 
