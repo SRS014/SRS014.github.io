@@ -127,6 +127,10 @@ ul.list li::marker { color: var(--color-secondary); }
 .badge-summary img { width: 40px; height: 40px; object-fit: contain; }
 .badge-summary strong { color: var(--color-primary); font-family: var(--font-display); }
 .footnote { margin-top: 28px; max-width: 72ch; }
+.cert-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.verify { font-size: 0.9rem; font-weight: 600; color: var(--color-primary); text-underline-offset: 3px; }
+.verify::after { content: ""; display: inline-block; width: 0.75em; height: 0.75em; margin-left: 5px; vertical-align: -0.02em;
+  background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 3h8v8M13 3 3 13' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 3h8v8M13 3 3 13' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; }
 @media (max-width: 480px) { .cert { gap: 14px; } .cert-badge { flex-basis: 60px; width: 60px; height: 60px; } }
 .badge-dot { flex: 0 0 34px; height: 34px; border-radius: 50%; background: var(--gradient-sky-fill); color: var(--color-surface);
   display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; }

@@ -26,10 +26,10 @@ import { site, about, experience, education, certifications, resumeSummary } fro
       )))}
 
       <h2>Certifications</h2>
-      <p class="small muted" style="margin-bottom:6px">Active Microsoft certifications ({certifications.active.length} of {certifications.active.length + certifications.previous.length} earned):</p>
-      <ul class="list">{certifications.active.map((c) => <li>{c.name} ({c.exam}, {c.issued})</li>)}</ul>
+      <p class="small muted" style="margin-bottom:6px">Active Microsoft certifications ({certifications.active.length}), verifiable on Microsoft Learn:</p>
+      <ul class="list">{certifications.active.map((c) => <li><a href={c.url}>{c.name}</a> ({c.exam}, {c.earned.split(" ").slice(1).join(" ")})</li>)}</ul>
       <p class="small muted" style="margin-bottom:6px">Microsoft Applied Skills:</p>
-      <ul class="list">{certifications.appliedSkills.map((c) => <li>{c}</li>)}</ul>
+      <ul class="list">{certifications.appliedSkills.map((c) => <li><a href={c.url}>{c.name}</a></li>)}</ul>
 
       <h2>Education</h2>
       {education.map((e) => <p>{e.degree}, {e.school} ({e.period}). {e.note}.</p>)}

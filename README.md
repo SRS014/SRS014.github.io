@@ -26,14 +26,15 @@ Almost everything lives in **`src/data/profile.ts`**:
 | About text, "What I build" cards, skills | `about` |
 | Jobs and bullet points | `experience` |
 | Education, honours | `education`, `honors` |
-| Certifications (active / previously held / Applied Skills / training) | `certifications` |
+| Certifications (active / expired / Applied Skills / training), each with its Microsoft Learn share link | `certifications` |
 | Projects (currently **placeholders**) | `projects` |
 | Blog posts on the Writing page | `writing` (add new posts at the top) |
 | Printable resume summary | `resumeSummary` |
 
 Rules that keep the site trustworthy:
 - Never add a phone number or home address.
-- Keep expired certifications in `certifications.previous`, never in `active`.
+- Certifications come from the Microsoft Learn transcript. When one expires, move it to `certifications.previous`
+  (never leave it in `active`); renewals just update `expires`.
 - The headline designation is "Power Platform Developer & Solution Builder".
 - Replace a placeholder project only with a real one: problem, what you built, tools, outcome, and a client
   name only if you may share it. Set `placeholder: false` and fill the fields.

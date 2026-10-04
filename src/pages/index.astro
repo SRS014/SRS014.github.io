@@ -39,7 +39,7 @@ import { site, about, certifications, writing } from "../data/profile";
       <div class="grid three">
         <div class="card"><p class="h-num grad-text" style="font-family:var(--font-display);font-weight:800;font-size:2.6rem;line-height:1;margin:0 0 8px">4+</p><p class="muted" style="margin:0">years building on the Power Platform at Data Crafters</p></div>
         <div class="card"><p class="grad-text" style="font-family:var(--font-display);font-weight:800;font-size:2.6rem;line-height:1;margin:0 0 8px">15+</p><p class="muted" style="margin:0">custom apps and workflows delivered</p></div>
-        <div class="card"><p class="grad-text" style="font-family:var(--font-display);font-weight:800;font-size:2.6rem;line-height:1;margin:0 0 8px">{certifications.active.length}</p><p class="muted" style="margin:0">active Microsoft certifications (11 earned)</p></div>
+        <div class="card"><p class="grad-text" style="font-family:var(--font-display);font-weight:800;font-size:2.6rem;line-height:1;margin:0 0 8px">{certifications.active.length}</p><p class="muted" style="margin:0">active Microsoft certifications, {certifications.active.filter((c) => c.level === "Expert").length} at Expert level</p></div>
       </div>
     </div>
   </section>

@@ -1,7 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
 import { certifications, certLevels } from "../data/profile";
-const total = certifications.active.length + certifications.previous.length;
 const badge = {
   Expert: "/images/badges/expert.svg",
   Associate: "/images/badges/associate.svg",
@@ -11,12 +10,13 @@ const activeByLevel = certLevels
   .map((level) => ({ level, items: certifications.active.filter((c) => c.level === level) }))
   .filter((g) => g.items.length);
 const id = (level: string) => `level-${level.toLowerCase()}`;
+const counts = activeByLevel.map((g) => `${g.items.length} ${g.level}`).join(", ");
 ---
-<Base title="Certifications" description="Sohan's Microsoft certifications by level (Expert, Associate, Fundamentals), previously held certifications, Applied Skills credentials and training.">
+<Base title="Certifications" description="Sohan's Microsoft certifications by level (Expert, Associate, Fundamentals) and Applied Skills credentials, each verifiable on Microsoft Learn.">
   <section class="page-head"><div class="wrap">
     <p class="eyebrow">Certifications</p>
     <h1>Microsoft <span class="grad-text">certifications</span></h1>
-    <p>{total} Microsoft certifications earned, {certifications.active.length} currently active, plus {certifications.appliedSkills.length} Applied Skills credentials.</p>
+    <p>{certifications.active.length} active Microsoft certifications ({counts}) and {certifications.appliedSkills.length} Applied Skills credentials. Each one links to its record on Microsoft Learn, so anyone can verify it.</p>
     <ul class="badge-summary" aria-label="Active credentials by level">
       {activeByLevel.map((g) => (
         <li><a href={`#${id(g.level)}`}><img src={badge[g.level]} alt="" width="56" height="56" /><span><strong>{g.items.length}</strong> {g.level}</span></a></li>
@@ -37,8 +37,11 @@ const id = (level: string) => `level-${level.toLowerCase()}`;
                 <img class="cert-badge" src={badge[c.level]} alt={`Microsoft Certified ${c.level} badge`} width="84" height="84" loading="lazy" />
                 <div>
                   <h4>{c.name}</h4>
-                  <p class="small muted">Exam {c.exam} · Issued {c.issued}</p>
-                  <span class="status active">Active</span>
+                  <p class="small muted">Exam {c.exam} · Earned {c.earned}<br />{c.expires ? `Valid until ${c.expires}` : "Doesn't expire"}</p>
+                  <div class="cert-meta">
+                    <span class="status active">Active</span>
+                    <a class="verify" href={c.url} target="_blank" rel="noopener" aria-label={`Verify ${c.name} on Microsoft Learn (opens in a new tab)`}>Verify on Microsoft Learn</a>
+                  </div>
                 </div>
               </article>
             ))}
@@ -48,7 +51,7 @@ const id = (level: string) => `level-${level.toLowerCase()}`;
     </div>
   </section>
 
-  <section class="section alt" aria-labelledby="previous-title">
+  {certifications.previous.length > 0 && <section class="section alt" aria-labelledby="previous-title">
     <div class="wrap">
       <div class="section-head"><h2 id="previous-title">Previously held</h2></div>
       <p class="muted prose">These certifications have expired. They're listed for the record, not as current credentials. The exams were passed; the certifications weren't renewed.</p>
@@ -65,9 +68,9 @@ const id = (level: string) => `level-${level.toLowerCase()}`;
         ))}
       </div>
     </div>
-  </section>
+  </section>}
 
-  <section class="section" aria-labelledby="applied-title">
+  <section class="section alt" aria-labelledby="applied-title">
     <div class="wrap">
       <div class="section-head"><h2 id="applied-title">Microsoft Applied Skills</h2></div>
       <p class="muted prose">Applied Skills are hands-on, lab-based credentials, separate from certifications.</p>
@@ -76,8 +79,9 @@ const id = (level: string) => `level-${level.toLowerCase()}`;
           <article class="card cert">
             <img class="cert-badge" src="/images/badges/applied-skill.svg" alt="Microsoft Applied Skills badge" width="84" height="84" loading="lazy" />
             <div>
-              <h4>{c}</h4>
-              <p class="small muted">Applied Skills credential</p>
+              <h4>{c.name}</h4>
+              <p class="small muted">Applied Skills credential · Earned {c.earned}</p>
+              <a class="verify" href={c.url} target="_blank" rel="noopener" aria-label={`Verify Applied Skills: ${c.name} on Microsoft Learn (opens in a new tab)`}>Verify on Microsoft Learn</a>
             </div>
           </article>
         ))}
@@ -85,7 +89,7 @@ const id = (level: string) => `level-${level.toLowerCase()}`;
     </div>
   </section>
 
-  <section class="section alt" aria-labelledby="training-title">
+  <section class="section" aria-labelledby="training-title">
     <div class="wrap">
       <div class="section-head"><h2 id="training-title">Training</h2></div>
       <div class="grid two">
