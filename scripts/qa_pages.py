@@ -36,6 +36,11 @@ def main() -> None:
             for path in PAGES:
                 page.goto(base + path)
                 page.wait_for_load_state("networkidle")
+                # load lazy images before the full-page screenshot
+                page.evaluate("""async () => {
+                    document.querySelectorAll('img[loading=lazy]').forEach((i) => { i.loading = 'eager'; });
+                    await Promise.all([...document.images].map((i) => i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; })));
+                }""")
                 name = "home" if path == "/" else path.strip("/").replace(".html", "")
                 page.screenshot(path=str(OUT / str(w) / f"{name}.png"), full_page=True)
                 overflow = page.evaluate("() => document.documentElement.scrollWidth - window.innerWidth")

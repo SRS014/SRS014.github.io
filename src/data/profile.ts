@@ -128,31 +128,39 @@ export const honors = [
   "Guest speaker",
 ];
 
-// Source: the owner's Microsoft Learn transcript (shared 2026-10-04). Every credential links to its public share page.
+// Sources: the owner's Microsoft Learn transcript and Credly badges (both shared 2026-10-04).
+// Every credential links to a public page where anyone can verify it.
 // level picks the official badge (public/images/badges/). Expired ones go in `previous`, never in `active`.
 export type CertLevel = "Expert" | "Associate" | "Fundamentals";
 export const certLevels: CertLevel[] = ["Expert", "Associate", "Fundamentals"];
 const learn = (id: string) =>
   `https://learn.microsoft.com/api/credentials/share/en-us/SohanurRahmanSohan-6350/${id}?sharingId=6050A3080F881232`;
-export type Cert = { name: string; exam: string; level: CertLevel; earned: string; expires: string | null; url: string };
+const credly = (id: string) => `https://www.credly.com/badges/${id}`;
+export type Verifier = "Microsoft Learn" | "Credly";
+export type Cert = { name: string; exam: string; level: CertLevel; earned: string; expires: string | null; url: string; verifier: Verifier };
+export type ExpiredCert = { name: string; exam: string; level: CertLevel; earned: string; expired: string; url: string; verifier: Verifier };
 export const certifications = {
   // Newest first within each level. expires: null = doesn't expire (Fundamentals).
   active: [
-    { name: "Microsoft Certified: Agentic AI Business Solutions Architect Expert", exam: "AB-100", level: "Expert", earned: "12 May 2026", expires: "13 May 2027", url: learn("455EA028B11CE5E4") },
-    { name: "Microsoft Certified: Power Platform Solution Architect Expert", exam: "PL-600", level: "Expert", earned: "31 August 2025", expires: "1 September 2027", url: learn("47C4CF67EF642C5") },
-    { name: "Microsoft Certified: Power Automate RPA Developer Associate", exam: "PL-500", level: "Associate", earned: "2 February 2026", expires: "3 February 2027", url: learn("FFB2F518734A4975") },
-    { name: "Microsoft Certified: Fabric Data Engineer Associate", exam: "DP-700", level: "Associate", earned: "3 May 2025", expires: "4 May 2027", url: learn("A26553B519AAF705") },
-    { name: "Microsoft Certified: Fabric Analytics Engineer Associate", exam: "DP-600", level: "Associate", earned: "11 June 2024", expires: "12 June 2027", url: learn("187DFCF0B263DBE7") },
-    { name: "Microsoft Certified: Power Platform Developer Associate", exam: "PL-400", level: "Associate", earned: "26 September 2023", expires: "27 September 2027", url: learn("183FB37E489E1790") },
-    { name: "Microsoft Certified: Power BI Data Analyst Associate", exam: "PL-300", level: "Associate", earned: "16 August 2022", expires: "17 August 2027", url: learn("3EFA1375FA52416") },
-    { name: "Microsoft 365 Certified: Copilot and Agent Administration Fundamentals", exam: "AB-900", level: "Fundamentals", earned: "30 January 2026", expires: null, url: learn("6CD5EC1884E11FA0") },
-    { name: "Microsoft Certified: Dynamics 365 Fundamentals (ERP)", exam: "MB-920", level: "Fundamentals", earned: "15 September 2025", expires: null, url: learn("3AC4E4A94B9BDF03") },
+    { name: "Microsoft Certified: Agentic AI Business Solutions Architect Expert", exam: "AB-100", level: "Expert", earned: "12 May 2026", expires: "13 May 2027", verifier: "Microsoft Learn", url: learn("455EA028B11CE5E4") },
+    { name: "Microsoft Certified: Power Platform Solution Architect Expert", exam: "PL-600", level: "Expert", earned: "31 August 2025", expires: "1 September 2027", verifier: "Microsoft Learn", url: learn("47C4CF67EF642C5") },
+    { name: "Microsoft Certified: Power Automate RPA Developer Associate", exam: "PL-500", level: "Associate", earned: "2 February 2026", expires: "3 February 2027", verifier: "Microsoft Learn", url: learn("FFB2F518734A4975") },
+    { name: "Microsoft Certified: Fabric Data Engineer Associate", exam: "DP-700", level: "Associate", earned: "3 May 2025", expires: "4 May 2027", verifier: "Microsoft Learn", url: learn("A26553B519AAF705") },
+    { name: "Microsoft Certified: Fabric Analytics Engineer Associate", exam: "DP-600", level: "Associate", earned: "11 June 2024", expires: "12 June 2027", verifier: "Microsoft Learn", url: learn("187DFCF0B263DBE7") },
+    { name: "Microsoft Certified: Power Platform Developer Associate", exam: "PL-400", level: "Associate", earned: "26 September 2023", expires: "27 September 2027", verifier: "Microsoft Learn", url: learn("183FB37E489E1790") },
+    { name: "Microsoft Certified: Power BI Data Analyst Associate", exam: "PL-300", level: "Associate", earned: "16 August 2022", expires: "17 August 2027", verifier: "Microsoft Learn", url: learn("3EFA1375FA52416") },
+    { name: "Microsoft 365 Certified: Copilot and Agent Administration Fundamentals", exam: "AB-900", level: "Fundamentals", earned: "30 January 2026", expires: null, verifier: "Microsoft Learn", url: learn("6CD5EC1884E11FA0") },
+    { name: "Microsoft Certified: Dynamics 365 Fundamentals (ERP)", exam: "MB-920", level: "Fundamentals", earned: "15 September 2025", expires: null, verifier: "Microsoft Learn", url: learn("3AC4E4A94B9BDF03") },
+    { name: "Microsoft Certified: Power Platform Fundamentals", exam: "PL-900", level: "Fundamentals", earned: "31 December 2022", expires: null, verifier: "Credly", url: credly("38a28af1-e41f-4722-a7ca-ce9b2bd277f7") },
+    { name: "Microsoft Certified: Azure Fundamentals", exam: "AZ-900", level: "Fundamentals", earned: "19 September 2022", expires: null, verifier: "Credly", url: credly("73021378-c65f-4cf7-899e-0286a05215c0") },
   ] as Cert[],
-  // Expired certifications: shown with the Exam badge and an "Expired" label. None on the transcript as of 2026-10-04.
-  previous: [] as { name: string; exam: string; level: CertLevel }[],
+  // Expired certifications: shown with the Exam badge and an "Expired" label, never as current.
+  previous: [
+    { name: "Microsoft Certified: Power Platform App Maker Associate", exam: "PL-100", level: "Associate", earned: "13 February 2023", expired: "13 February 2024", verifier: "Credly", url: credly("b57ba1e8-7a85-428f-b9f8-7e98b7d2c5a0") },
+  ] as ExpiredCert[],
   appliedSkills: [
-    { name: "Create and manage automated processes by using Power Automate", earned: "3 November 2024", url: learn("1230A3686CBA4398") },
-    { name: "Create and manage canvas apps with Power Apps", earned: "25 November 2023", url: learn("49ADA1F6A1460A67") },
+    { name: "Create and manage automated processes by using Power Automate", earned: "3 November 2024", verifier: "Microsoft Learn", url: learn("1230A3686CBA4398") },
+    { name: "Create and manage canvas apps with Power Apps", earned: "25 November 2023", verifier: "Microsoft Learn", url: learn("49ADA1F6A1460A67") },
   ],
   training: [
     { provider: "SQLBI", courses: ["DAX Patterns", "Data Modeling for Power BI", "Introduction to Data Modeling for Power BI", "Power BI Dashboard Design"] },

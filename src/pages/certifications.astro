@@ -12,11 +12,11 @@ const activeByLevel = certLevels
 const id = (level: string) => `level-${level.toLowerCase()}`;
 const counts = activeByLevel.map((g) => `${g.items.length} ${g.level}`).join(", ");
 ---
-<Base title="Certifications" description="Sohan's Microsoft certifications by level (Expert, Associate, Fundamentals) and Applied Skills credentials, each verifiable on Microsoft Learn.">
+<Base title="Certifications" description="Sohan's Microsoft certifications by level (Expert, Associate, Fundamentals) and Applied Skills credentials, each verifiable on Microsoft Learn or Credly.">
   <section class="page-head"><div class="wrap">
     <p class="eyebrow">Certifications</p>
     <h1>Microsoft <span class="grad-text">certifications</span></h1>
-    <p>{certifications.active.length} active Microsoft certifications ({counts}) and {certifications.appliedSkills.length} Applied Skills credentials. Each one links to its record on Microsoft Learn, so anyone can verify it.</p>
+    <p>{certifications.active.length} active Microsoft certifications ({counts}) and {certifications.appliedSkills.length} Applied Skills credentials. Each one links to its record on Microsoft Learn or Credly, so anyone can verify it.</p>
     <ul class="badge-summary" aria-label="Active credentials by level">
       {activeByLevel.map((g) => (
         <li><a href={`#${id(g.level)}`}><img src={badge[g.level]} alt="" width="56" height="56" /><span><strong>{g.items.length}</strong> {g.level}</span></a></li>
@@ -40,7 +40,7 @@ const counts = activeByLevel.map((g) => `${g.items.length} ${g.level}`).join(", 
                   <p class="small muted">Exam {c.exam} · Earned {c.earned}<br />{c.expires ? `Valid until ${c.expires}` : "Doesn't expire"}</p>
                   <div class="cert-meta">
                     <span class="status active">Active</span>
-                    <a class="verify" href={c.url} target="_blank" rel="noopener" aria-label={`Verify ${c.name} on Microsoft Learn (opens in a new tab)`}>Verify on Microsoft Learn</a>
+                    <a class="verify" href={c.url} target="_blank" rel="noopener" aria-label={`Verify ${c.name} on ${c.verifier} (opens in a new tab)`}>Verify on {c.verifier}</a>
                   </div>
                 </div>
               </article>
@@ -54,15 +54,18 @@ const counts = activeByLevel.map((g) => `${g.items.length} ${g.level}`).join(", 
   {certifications.previous.length > 0 && <section class="section alt" aria-labelledby="previous-title">
     <div class="wrap">
       <div class="section-head"><h2 id="previous-title">Previously held</h2></div>
-      <p class="muted prose">These certifications have expired. They're listed for the record, not as current credentials. The exams were passed; the certifications weren't renewed.</p>
+      <p class="muted prose">Expired certifications are listed for the record, not as current credentials: the exam was passed, and the certification wasn't renewed.</p>
       <div class="grid two">
         {certifications.previous.map((c) => (
           <article class="card cert">
             <img class="cert-badge exam" src="/images/badges/past-exam.svg" alt="Microsoft exam badge" width="63" height="84" loading="lazy" />
             <div>
               <h4>{c.name}</h4>
-              <p class="small muted">Exam {c.exam} · {c.level} level</p>
-              <span class="status previous">Expired</span>
+              <p class="small muted">Exam {c.exam} · {c.level} level<br />Earned {c.earned} · Expired {c.expired}</p>
+              <div class="cert-meta">
+                <span class="status previous">Expired</span>
+                <a class="verify" href={c.url} target="_blank" rel="noopener" aria-label={`View ${c.name} (expired) on ${c.verifier} (opens in a new tab)`}>View on {c.verifier}</a>
+              </div>
             </div>
           </article>
         ))}
@@ -70,7 +73,7 @@ const counts = activeByLevel.map((g) => `${g.items.length} ${g.level}`).join(", 
     </div>
   </section>}
 
-  <section class="section alt" aria-labelledby="applied-title">
+  <section class="section" aria-labelledby="applied-title">
     <div class="wrap">
       <div class="section-head"><h2 id="applied-title">Microsoft Applied Skills</h2></div>
       <p class="muted prose">Applied Skills are hands-on, lab-based credentials, separate from certifications.</p>
@@ -89,7 +92,7 @@ const counts = activeByLevel.map((g) => `${g.items.length} ${g.level}`).join(", 
     </div>
   </section>
 
-  <section class="section" aria-labelledby="training-title">
+  <section class="section alt" aria-labelledby="training-title">
     <div class="wrap">
       <div class="section-head"><h2 id="training-title">Training</h2></div>
       <div class="grid two">
