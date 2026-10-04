@@ -1,0 +1,63 @@
+---
+import Base from "../layouts/Base.astro";
+import { certifications } from "../data/profile";
+const total = certifications.active.length + certifications.previous.length;
+---
+<Base title="Certifications" description="Sohan's Microsoft certifications: active, previously held, Applied Skills credentials and training.">
+  <section class="page-head"><div class="wrap">
+    <p class="eyebrow">Certifications</p>
+    <h1>Microsoft <span class="grad-text">certifications</span></h1>
+    <p>{total} Microsoft certifications earned, {certifications.active.length} currently active.</p>
+  </div></section>
+
+  <section class="section" aria-labelledby="active-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="active-title">Active</h2></div>
+      <div class="grid two">
+        {certifications.active.map((c, i) => (
+          <article class="card cert">
+            <span class="badge-dot" aria-hidden="true">{i + 1}</span>
+            <div>
+              <h3 style="font-size:1.05rem">{c.name}</h3>
+              <p class="small muted" style="margin:4px 0 6px">Issued {c.issued}</p>
+              <span class="status active">Active</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" aria-labelledby="previous-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="previous-title">Previously held</h2></div>
+      <p class="muted prose">These certifications have expired. They're listed for the record, not as current credentials.</p>
+      <div class="grid two">
+        {certifications.previous.map((c) => (
+          <article class="card"><h3 style="font-size:1.02rem">{c}</h3><span class="status previous">Previously held</span></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="applied-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="applied-title">Microsoft Applied Skills</h2></div>
+      <p class="muted prose">Applied Skills are hands-on credentials, separate from certifications.</p>
+      <div class="grid two">
+        {certifications.appliedSkills.map((c) => <article class="card"><h3 style="font-size:1.02rem">{c}</h3></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" aria-labelledby="training-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="training-title">Training</h2></div>
+      <div class="grid two">
+        {certifications.training.map((t) => (
+          <article class="card"><h3>{t.provider}</h3><ul class="list">{t.courses.map((c) => <li>{c}</li>)}</ul></article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

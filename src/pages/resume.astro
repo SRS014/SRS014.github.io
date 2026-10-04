@@ -1,0 +1,44 @@
+---
+import Base from "../layouts/Base.astro";
+import { site, about, experience, education, certifications, resumeSummary } from "../data/profile";
+---
+<Base title="Resume" description="Printable resume of Sohanur Rahman Sohan, Power Platform Developer & Solution Builder.">
+  <section class="page-head"><div class="wrap resume">
+    <p class="eyebrow no-print">Resume</p>
+    <h1 style="font-size:2.2rem">{site.fullName}</h1>
+    <p class="designation" style="margin-top:8px">{site.designation}</p>
+    <p class="small">{site.location} · <a href={`mailto:${site.email}`}>{site.email}</a> · <a href={site.links.linkedin}>{site.links.linkedinDisplay}</a> · <a href={site.links.github}>{site.links.githubDisplay}</a> · <a href={site.links.blog}>{site.links.blogDisplay}</a></p>
+    <p class="no-print"><a class="btn btn-secondary" href="/resume.pdf">Download PDF</a></p>
+  </div></section>
+
+  <section class="section" style="padding-top:8px">
+    <div class="wrap resume">
+      <h2>Summary</h2>
+      <p>{resumeSummary}</p>
+
+      <h2>Experience</h2>
+      {experience.map((job) => job.roles.map((r) => (
+        <div style="margin-bottom:14px">
+          <p style="margin:0"><strong>{r.title}</strong> · {job.org}{job.place ? `, ${job.place}` : ""}</p>
+          <p class="period" style="margin:0 0 4px">{r.period}</p>
+          <ul class="list">{r.points.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      )))}
+
+      <h2>Certifications</h2>
+      <p class="small muted" style="margin-bottom:6px">Active Microsoft certifications ({certifications.active.length} of {certifications.active.length + certifications.previous.length} earned):</p>
+      <ul class="list">{certifications.active.map((c) => <li>{c.name} ({c.issued})</li>)}</ul>
+      <p class="small muted" style="margin-bottom:6px">Microsoft Applied Skills:</p>
+      <ul class="list">{certifications.appliedSkills.map((c) => <li>{c}</li>)}</ul>
+
+      <h2>Education</h2>
+      {education.map((e) => <p>{e.degree}, {e.school} ({e.period}). {e.note}.</p>)}
+
+      <h2>Skills</h2>
+      <p>{about.skills.join(" · ")}</p>
+
+      <h2>Languages</h2>
+      <p>{site.languages.join(" · ")}</p>
+    </div>
+  </section>
+</Base>

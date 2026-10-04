@@ -1,0 +1,30 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/profile";
+---
+<Base title="Contact" description="Contact Sohan by email or on LinkedIn.">
+  <section class="page-head"><div class="wrap">
+    <p class="eyebrow">Contact</p>
+    <h1>Let's <span class="grad-text">talk</span></h1>
+    <p>Questions about the Power Platform, a project idea, or something I wrote? Email or LinkedIn reach me fastest.</p>
+  </div></section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid two">
+        <article class="card">
+          <h2 style="font-size:1.2rem;margin-bottom:8px">Email</h2>
+          <p><a class="icon-link" href={`mailto:${site.email}`}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#0B5F7E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6" stroke="#209CCB"/></svg>{site.email}</a></p>
+          <a class="btn btn-primary" href={`mailto:${site.email}`}>Send an email</a>
+        </article>
+        <article class="card">
+          <h2 style="font-size:1.2rem;margin-bottom:8px">LinkedIn</h2>
+          <p><a class="icon-link" href={site.links.linkedin}><img src="/images/linkedin-inbug.png" alt="" width="20" height="17" />{site.links.linkedinDisplay}</a></p>
+          <a class="btn btn-secondary" href={site.links.linkedin}>Connect on LinkedIn</a>
+        </article>
+      </div>
+      <p class="muted small" style="margin-top:20px">Based in {site.location}. I usually reply within a few days.</p>
+    </div>
+  </section>
+</Base>

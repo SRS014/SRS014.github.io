@@ -1,0 +1,48 @@
+---
+import Base from "../layouts/Base.astro";
+import { site, about, education, honors } from "../data/profile";
+---
+<Base title="About" description="Who Sohan is, what he builds on the Power Platform, and where he's heading next.">
+  <section class="page-head"><div class="wrap">
+    <p class="eyebrow">About</p>
+    <h1>Hi, I'm <span class="grad-text">Sohan</span>.</h1>
+    <p class="designation">{site.designation}</p>
+  </div></section>
+
+  <section class="section" aria-label="Introduction">
+    <div class="wrap prose">
+      {about.intro.map((p) => <p>{p}</p>)}
+      <div class="callout" style="margin-top:24px">
+        <p class="label">Where I'm heading</p>
+        <p style="margin:0">{about.goal}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" aria-labelledby="skills-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="skills-title">Skills</h2></div>
+      <ul class="tags">{about.skills.map((s) => <li>{s}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="more-title">Education and more</h2></div>
+      <div class="grid three">
+        <article class="card">
+          <h3>Education</h3>
+          {education.map((e) => <p><strong>{e.degree}</strong><br />{e.school}, {e.period}<br /><span class="muted">{e.note}</span></p>)}
+        </article>
+        <article class="card">
+          <h3>Honours</h3>
+          <ul class="list">{honors.map((h) => <li>{h}</li>)}</ul>
+        </article>
+        <article class="card">
+          <h3>Languages</h3>
+          <ul class="list">{site.languages.map((l) => <li>{l}</li>)}</ul>
+        </article>
+      </div>
+    </div>
+  </section>
+</Base>

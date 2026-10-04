@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import { experience } from "../data/profile";
+---
+<Base title="Experience" description="Sohan's experience at Data Crafters and before: Power Apps, Power Automate, Power BI, Dataverse and D365 F&O integration.">
+  <section class="page-head"><div class="wrap">
+    <p class="eyebrow">Experience</p>
+    <h1>Where I've <span class="grad-text">built things</span></h1>
+    <p>Four-plus years at Data Crafters, growing from intern to the Power Platform developer who leads the Power Apps team.</p>
+  </div></section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <ol class="timeline">
+        {experience.map((job) => (
+          <li>
+            <h2 style="font-size:1.35rem">{job.org}</h2>
+            <p class="period" style="margin:2px 0 0">{[job.place, job.period].filter(Boolean).join(" · ")}</p>
+            {job.roles.map((r) => (
+              <div class="role">
+                <h3 style="font-size:1.05rem;color:var(--color-primary)">{r.title}</h3>
+                <p class="period" style="margin:2px 0 6px">{r.period}</p>
+                <ul class="list">{r.points.map((p) => <li>{p}</li>)}</ul>
+              </div>
+            ))}
+          </li>
+        ))}
+      </ol>
+      <div class="actions no-print"><a class="btn btn-secondary" href="/resume/">Printable resume</a></div>
+    </div>
+  </section>
+</Base>

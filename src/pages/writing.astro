@@ -1,0 +1,29 @@
+---
+import Base from "../layouts/Base.astro";
+import { site, writing } from "../data/profile";
+---
+<Base title="Writing" description="The Fusion Platform by Sohan: practical Power Platform insights, tutorials and architecture thinking.">
+  <section class="page-head"><div class="wrap">
+    <p class="eyebrow">Writing</p>
+    <h1>The Fusion Platform <span class="grad-text">by Sohan</span></h1>
+    <p>Fuse ideas. Build smarter. Integrate better. Practical insights, tutorials and architecture thinking on Power Platform, enterprise technology, data, automation and AI. A new post most weeks: one week a detailed guide with a carousel, the next a one-page summary.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={site.links.blog}>Read the blog</a>
+      <a class="btn btn-secondary" href={site.links.linkedin}>Follow on LinkedIn</a>
+    </div>
+  </div></section>
+
+  <section class="section" aria-labelledby="posts-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="posts-title">Recent posts</h2></div>
+      <div class="grid three">
+        {writing.map((w) => (
+          <article class="card">
+            <p class="small muted" style="margin:0 0 6px">{w.date}</p>
+            <h3><a href={w.url}>{w.title}</a></h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
