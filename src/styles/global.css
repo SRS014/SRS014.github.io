@@ -146,6 +146,28 @@ dl.fields { display: grid; grid-template-columns: 1fr; gap: 6px 16px; margin: 12
 dl.fields dt { font-weight: 600; font-size: 0.92rem; }
 dl.fields dd { margin: 0 0 6px; color: var(--color-text-muted); font-size: 0.92rem; }
 
+/* projects */
+.project-card { display: flex; flex-direction: column; }
+.project-card .tags { margin-top: auto; padding-top: 8px; }
+.small-eyebrow { font-size: 0.72rem; margin-bottom: 8px; }
+.card-title { font-size: 1.35rem; margin-bottom: 10px; }
+.card-title a { color: var(--color-text); text-decoration: none; }
+.card-title a::after { content: ""; position: absolute; inset: 0; }
+.card-title a:hover, .card-title a:focus-visible { color: var(--color-primary); text-decoration: underline; }
+.card-cta { margin: 16px 0 0; font-weight: 600; color: var(--color-primary); }
+.lead-muted { font-size: 1.15rem; }
+.case { display: grid; gap: 32px; }
+@media (min-width: 960px) { .case { grid-template-columns: minmax(0, 1fr) 340px; align-items: start; } }
+.case-main { max-width: var(--max-prose); }
+.case-h { font-size: 1.4rem; margin: 28px 0 10px; }
+.case-main .case-h:first-child { margin-top: 0; }
+.link-list { list-style: none; padding: 0; margin: 0; }
+.link-list li { margin: 6px 0; }
+.diagram { margin: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 12px; }
+.diagram img { width: 100%; border-radius: 8px; }
+.diagram figcaption { margin-top: 10px; }
+.shot-placeholder { text-align: center; padding: 40px 24px; }
+
 /* callout */
 .callout { background: var(--gradient-sky-wash); border: 1px solid var(--color-border); border-radius: 12px; padding: 20px 24px 20px 28px; position: relative; overflow: hidden; }
 .callout::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(180deg, var(--color-secondary), var(--color-purple), var(--color-magenta)); }

@@ -16,7 +16,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST, OUT = ROOT / "dist", ROOT / "screenshots"
-PAGES = ["/", "/about/", "/experience/", "/projects/", "/certifications/", "/writing/", "/contact/", "/resume/", "/404.html"]
+PAGES = ["/", "/about/", "/experience/", "/projects/", "/projects/canvas-equipment-inspections/", "/projects/canvas-pcf-rules-driven-inspections/", "/certifications/", "/writing/", "/contact/", "/resume/", "/404.html"]
 WIDTHS = [360, 768, 1280]
 AXE = (ROOT / "node_modules" / "axe-core" / "axe.min.js").read_text(encoding="utf-8")
 
@@ -41,7 +41,7 @@ def main() -> None:
                     document.querySelectorAll('img[loading=lazy]').forEach((i) => { i.loading = 'eager'; });
                     await Promise.all([...document.images].map((i) => i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; })));
                 }""")
-                name = "home" if path == "/" else path.strip("/").replace(".html", "")
+                name = "home" if path == "/" else path.strip("/").replace(".html", "").replace("/", "_")
                 page.screenshot(path=str(OUT / str(w) / f"{name}.png"), full_page=True)
                 overflow = page.evaluate("() => document.documentElement.scrollWidth - window.innerWidth")
                 page.add_script_tag(content=AXE)

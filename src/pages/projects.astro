@@ -1,31 +1,32 @@
 ---
 import Base from "../layouts/Base.astro";
-import { projects, projectFields } from "../data/profile";
+import { projects } from "../data/profile";
 ---
-<Base title="Projects" description="Selected Power Platform projects and architecture case studies by Sohan.">
+<Base title="Projects" description="Power Platform projects by Sohan: what was built, why, and what the tests showed.">
   <section class="page-head"><div class="wrap">
     <p class="eyebrow">Projects</p>
     <h1>Projects and <span class="grad-text">case studies</span></h1>
-    <p>Real projects are on their way. Each one will cover the problem, what I built, the tools and the outcome, with client names only where I'm allowed to share them.</p>
+    <p>Each project covers the problem, what I built, the result and the source code. All data in them is fictional demo data.</p>
   </div></section>
 
   <section class="section">
     <div class="wrap">
-      <div class="grid three">
+      <div class="grid two">
         {projects.map((p) => (
-          <article class={`card${p.placeholder ? " placeholder" : ""}`}>
-            {p.placeholder && <span class="flag">Placeholder</span>}
-            <h2 style="font-size:1.2rem;margin-bottom:6px">{p.title}</h2>
-            <p class="muted small">Area: {p.area}</p>
-            <dl class="fields">
-              {projectFields.map((f) => <><dt>{f}</dt><dd>To be added</dd></>)}
-            </dl>
+          <article class="card project-card">
+            <p class="eyebrow small-eyebrow">{p.area}</p>
+            <h2 class="card-title"><a href={`/projects/${p.slug}/`}>{p.title}</a></h2>
+            <p>{p.value}</p>
+            <ul class="tags" aria-label="Tech stack">
+              {p.tags.map((t) => <li>{t}</li>)}
+            </ul>
+            <p class="card-cta" aria-hidden="true">Read the case study →</p>
           </article>
         ))}
       </div>
       <div class="callout" style="margin-top:28px">
-        <p class="label">Want the details now?</p>
-        <p style="margin:0">Happy to walk you through my work in a conversation. <a href="/contact/">Get in touch</a>.</p>
+        <p class="label">Want the details?</p>
+        <p style="margin:0">Happy to walk you through any of these in a conversation. <a href="/contact/">Get in touch</a>.</p>
       </div>
     </div>
   </section>

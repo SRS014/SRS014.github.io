@@ -168,13 +168,77 @@ export const certifications = {
   ],
 };
 
-// PLACEHOLDERS: the owner will supply real projects. Never replace these with invented case studies.
-export const projects = [
-  { placeholder: true, title: "Project 1 — to be added", area: "Power Apps + D365 F&O integration" },
-  { placeholder: true, title: "Project 2 — to be added", area: "Power Automate approvals and data sync" },
-  { placeholder: true, title: "Project 3 — to be added", area: "Power BI reporting on Dataverse" },
+// Real projects only, supplied or approved by the owner. Never add invented case studies.
+// Each project gets a card on /projects/ and a detail page at /projects/<slug>/.
+export type Project = {
+  slug: string;
+  title: string;
+  value: string;
+  area: string;
+  problem: string;
+  solution: string[];
+  result: string[];
+  role: string;
+  tags: string[];
+  repo: string;
+  diagram: { src: string; alt: string };
+  related?: string;
+};
+const inspectionRepo = "https://github.com/SRS014/canvas-vs-pcf-inspection";
+const inspectionDiagram = {
+  src: "/projects/canvas-vs-pcf/architecture.svg",
+  alt: "Architecture: inspectors use App 1 (Canvas only) and App 2 (Canvas with two React code components). Both apps read and write seven Dataverse tables. Source and deployment scripts live in GitHub.",
+};
+export const projects: Project[] = [
+  {
+    slug: "canvas-equipment-inspections",
+    title: "Equipment Inspections in Canvas",
+    value: "A multi-stage inspection app in Power Apps Canvas and Dataverse, built to find exactly where Canvas stops.",
+    area: "Power Apps Canvas + Dataverse",
+    problem:
+      "Inspectors check forklifts and conveyors across three warehouse sites. They need a checklist that changes with each answer, a live risk score with critical stops, photos of defects, and Dataverse as the record. The checklist and its rules live in tables, so a new template shouldn't need a new app.",
+    solution: [
+      "Seven Dataverse tables, with the checklist stored as a self-referencing question tree and the conditions held as data.",
+      "Five Canvas screens: inspection list, guided start, staged checklist, photos with Pen markup, and review and submit.",
+      "A live score in Power Fx: weights, an equipment-criticality multiplier, a cap at 100 and critical stops.",
+      "Every limit documented with evidence from the build, then confirmed in three Monitor-traced test runs.",
+    ],
+    result: [
+      "Signed off after three traced test runs.",
+      "Ten documented limits. The biggest: Power Fx functions can't recurse, so the checklist stops at five levels and a sixth-level critical question never shows.",
+      "Those limits became the brief for the PCF version.",
+    ],
+    role: "Sole builder: data model, provisioning scripts, Canvas app, testing and write-up.",
+    tags: ["Power Apps (Canvas)", "Power Fx", "Dataverse", "Monitor", "Git"],
+    repo: inspectionRepo,
+    diagram: inspectionDiagram,
+    related: "canvas-pcf-rules-driven-inspections",
+  },
+  {
+    slug: "canvas-pcf-rules-driven-inspections",
+    title: "Canvas + PCF: Rules-Driven Inspections",
+    value: "The same inspection app, with React + TypeScript code components where Canvas ran out.",
+    area: "Power Apps Canvas + PCF code components",
+    problem:
+      "The Canvas version hit hard limits: a five-level checklist, a hard-coded cross-question rule, no compound risk rules, and freehand-only photo markup saved apart from the photo.",
+    solution: [
+      "InspectionChecklist: a React + TypeScript code component that walks the question tree recursively, evaluates rule trees stored as JSON and explains every point in the score.",
+      "Compound risk rules held as Dataverse rows, so a new rule is a new row, not a new app version.",
+      "PhotoAnnotator: numbered markers, arrows, boxes, freehand and notes, saved as a flattened JPEG plus editable mark data.",
+      "Canvas still owns every Dataverse read and write, and passes data to the components as JSON. Code components in canvas apps have no Dataverse Web API.",
+    ],
+    result: [
+      "No depth limit: the sixth-level critical question shows and scores.",
+      "15 unit tests cover the scoring engine and the Canvas data contract.",
+      "Testing caught a real issue: explicit column selection dropped columns that reached the component only through JSON. Naming every column fixed it.",
+    ],
+    role: "Sole builder: component design, React + TypeScript, Canvas integration, deployment and testing.",
+    tags: ["Power Apps (Canvas)", "PCF", "React", "TypeScript", "Fluent UI v9", "Dataverse", "Power Platform CLI"],
+    repo: inspectionRepo,
+    diagram: inspectionDiagram,
+    related: "canvas-equipment-inspections",
+  },
 ];
-export const projectFields = ["The problem", "What I built", "Tools", "Outcome"];
 
 // Published posts on The Fusion Platform (from the blog archive). Add new posts at the top.
 export const writing = [

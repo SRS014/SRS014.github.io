@@ -1,0 +1,71 @@
+---
+import Base from "../../layouts/Base.astro";
+import { projects, site, type Project } from "../../data/profile";
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+const { project: p } = Astro.props as { project: Project };
+const related = p.related ? projects.find((x) => x.slug === p.related) : undefined;
+---
+<Base title={p.title} description={p.value}>
+  <section class="page-head"><div class="wrap">
+    <p class="small"><a href="/projects/">← All projects</a></p>
+    <p class="eyebrow">{p.area}</p>
+    <h1>{p.title}</h1>
+    <p class="lead-muted">{p.value}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={p.repo}>View the code on GitHub</a>
+    </div>
+  </div></section>
+
+  <section class="section">
+    <div class="wrap case">
+      <div class="case-main">
+        <h2 class="case-h">The problem</h2>
+        <p>{p.problem}</p>
+
+        <h2 class="case-h">What I built</h2>
+        <ul class="list">{p.solution.map((s) => <li>{s}</li>)}</ul>
+
+        <h2 class="case-h">The result</h2>
+        <ul class="list">{p.result.map((s) => <li>{s}</li>)}</ul>
+      </div>
+
+      <aside class="case-side" aria-label="Project facts">
+        <div class="card">
+          <h3>My role</h3>
+          <p>{p.role}</p>
+          <h3 style="margin-top:18px">Tech stack</h3>
+          <ul class="tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+          <h3 style="margin-top:18px">Links</h3>
+          <ul class="link-list">
+            <li><a href={p.repo}>GitHub repository</a></li>
+            {related && <li><a href={`/projects/${related.slug}/`}>{related.title}</a></li>}
+            <li>Blog post: coming soon on <a href={site.links.blog}>The Fusion Platform</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <div class="section-head"><h2>Architecture</h2></div>
+      <figure class="diagram">
+        <a href={p.diagram.src}><img src={p.diagram.src} alt={p.diagram.alt} width="1280" height="770" loading="lazy" /></a>
+        <figcaption class="small muted">Both apps share one Dataverse model. Select the diagram to open it full size.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Screenshots</h2></div>
+      <div class="card placeholder shot-placeholder">
+        <span class="flag">Coming soon</span>
+        <p style="margin:0">Screenshots from the final test run will go here.</p>
+      </div>
+    </div>
+  </section>
+</Base>
