@@ -178,7 +178,10 @@ export type Project = {
   problem: string;
   solution: string[];
   result: string[];
-  findings?: string[];
+  // Issues found in testing. Text in `backticks` renders as code.
+  findings?: { title: string; happened: string; fix: string }[];
+  findingsIntro?: string;
+  blog?: { title: string; url: string };
   role: string;
   tags: string[];
   repo: string;
@@ -224,6 +227,7 @@ export const projects: Project[] = [
       { src: shot("app1-07-pen-saved"), alt: "Saved photo with the freehand strokes and a note that strokes are stored as a separate image.", caption: "The strokes save as a separate image, apart from the photo." },
       { src: shot("app1-05-submitted"), alt: "Home screen with a banner confirming the inspection was submitted with risk 30.0, Critical.", caption: "Submitted to Dataverse, and the counts update straight away." },
     ],
+    blog: { title: "When to Use Code Components in Canvas Apps", url: "https://thefusionplatform.wordpress.com/2026/10/19/when-to-use-code-components-in-canvas-apps/" },
     related: "canvas-pcf-rules-driven-inspections",
   },
   {
@@ -242,12 +246,25 @@ export const projects: Project[] = [
     result: [
       "No depth limit: the sixth-level critical question shows and scores.",
       "15 unit tests cover the scoring engine and the Canvas data contract.",
-      "Testing in the real app caught three issues the local test harness hid. Each one is fixed; details below.",
+      "Testing in the real canvas app found three issues, all fixed. See What testing found below.",
     ],
+    findingsIntro: "Found while testing the published canvas app on 18 October 2026. The local test harness showed none of them.",
     findings: [
-      "No redraw after a click (test 1, 18 October 2026). In the canvas app, updateView didn't run after notifyOutputChanged when no input had changed, so clicks updated the answers but not the screen. The local test harness did redraw, which hid it. Fix: the React view re-renders itself through a small store.",
-      "Wrong width in auto-layout (test 1, 18 October 2026). Inside an auto-layout container, allocatedWidth matched the control's Width property, not its laid-out width, so the question column collapsed. Fix: the views fill 100% of the control's box.",
-      "Columns never fetched (test 3, 18 October 2026, Live monitor trace). The questions reached the component only through JSON(DropColumns(colQ, Rec)). The question query fetched 9 columns; the parent, condition, weight and option columns were never requested. Every question showed and the risk score stayed at 0. Fix: name every column with JSON(ShowColumns(colQ, ...)).",
+      {
+        title: "The screen didn't redraw after a click",
+        happened: "In the canvas app, `updateView` didn't run after `notifyOutputChanged` when no input had changed, so a click saved the answer but the screen stayed the same. The local test harness did redraw, which hid it.",
+        fix: "The React view re-renders itself through a small store.",
+      },
+      {
+        title: "The wrong width inside auto-layout",
+        happened: "Inside an auto-layout container, `allocatedWidth` matched the control's Width property, not its laid-out width, so the question column collapsed.",
+        fix: "Both views fill 100% of the control's box.",
+      },
+      {
+        title: "Columns Power Apps never fetched",
+        happened: "The questions reached the component only through `JSON(DropColumns(colQ, Rec))`. A Live monitor trace showed the question query fetching 9 columns; the parent, condition, weight and option columns were never requested. Every question showed and the risk score stayed at 0.",
+        fix: "Name every column: `JSON(ShowColumns(colQ, ...))`.",
+      },
     ],
     role: "Sole builder: component design, React + TypeScript, Canvas integration, deployment and testing.",
     tags: ["Power Apps (Canvas)", "PCF", "React", "TypeScript", "Fluent UI v9", "Dataverse", "Power Platform CLI"],
@@ -260,12 +277,33 @@ export const projects: Project[] = [
       { src: shot("app2-02-new-inspection"), alt: "New inspection screen in App 2 with a site and forklift selected.", caption: "Everything around the components stays plain Canvas." },
       { src: shot("app2-04-review"), alt: "Review screen in App 2 with 3 of 14 visible questions answered and a risk score of 0.0, Low.", caption: "Review reads the component's outputs: 14 visible questions, not the whole template." },
     ],
+    blog: { title: "When to Use Code Components in Canvas Apps", url: "https://thefusionplatform.wordpress.com/2026/10/19/when-to-use-code-components-in-canvas-apps/" },
     related: "canvas-equipment-inspections",
   },
 ];
 
 // Published posts on The Fusion Platform (from the blog archive). Add new posts at the top.
 export const writing = [
+  {
+    title: "When to Use Code Components in Canvas Apps",
+    url: "https://thefusionplatform.wordpress.com/2026/10/19/when-to-use-code-components-in-canvas-apps/",
+    date: "19 October 2026",
+  },
+  {
+    title: "Learning pro-code isn’t leaving low-code",
+    url: "https://thefusionplatform.wordpress.com/2026/10/17/learning-pro-codeisnt-leavinglow-code/",
+    date: "17 October 2026",
+  },
+  {
+    title: "Stuck on a Power Platform build? Open the right tool",
+    url: "https://thefusionplatform.wordpress.com/2026/10/14/stuck-on-a-power-platform-build-open-the-right-tool/",
+    date: "14 October 2026",
+  },
+  {
+    title: "Dataverse vs SharePoint Lists: How to Choose",
+    url: "https://thefusionplatform.wordpress.com/2026/10/06/dataverse-vs-sharepoint-lists-how-to-choose/",
+    date: "6 October 2026",
+  },
   {
     title: "Power Apps Performance Killers — And How to Fix Them",
     url: "https://thefusionplatform.wordpress.com/2026/03/21/power-apps-performance-killers-and-how-to-fix-them/",

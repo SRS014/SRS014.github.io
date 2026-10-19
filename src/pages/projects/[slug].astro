@@ -7,6 +7,8 @@ export function getStaticPaths() {
 }
 const { project: p } = Astro.props as { project: Project };
 const related = p.related ? projects.find((x) => x.slug === p.related) : undefined;
+// `text` in backticks renders as code; everything else stays escaped text.
+const codeParts = (s: string) => s.split("`").map((text, i) => ({ text, code: i % 2 === 1 }));
 ---
 <Base title={p.title} description={p.value}>
   <section class="page-head"><div class="wrap">
@@ -34,7 +36,16 @@ const related = p.related ? projects.find((x) => x.slug === p.related) : undefin
         {p.findings && (
           <>
             <h2 class="case-h">What testing found</h2>
-            <ul class="list">{p.findings.map((s) => <li>{s}</li>)}</ul>
+            {p.findingsIntro && <p>{p.findingsIntro}</p>}
+            <ol class="findings">
+              {p.findings.map((f) => (
+                <li class="finding">
+                  <h3>{f.title}</h3>
+                  <p>{codeParts(f.happened).map((x) => (x.code ? <code>{x.text}</code> : x.text))}</p>
+                  <p class="finding-fix"><span class="label">Fix</span> {codeParts(f.fix).map((x) => (x.code ? <code>{x.text}</code> : x.text))}</p>
+                </li>
+              ))}
+            </ol>
           </>
         )}
       </div>
@@ -49,7 +60,9 @@ const related = p.related ? projects.find((x) => x.slug === p.related) : undefin
           <ul class="link-list">
             <li><a href={p.repo}>GitHub repository</a></li>
             {related && <li><a href={`/projects/${related.slug}/`}>{related.title}</a></li>}
-            <li>Blog post: coming soon on <a href={site.links.blog}>The Fusion Platform</a></li>
+            {p.blog
+              ? <li>Blog post: <a href={p.blog.url}>{p.blog.title}</a></li>
+              : <li>Blog post: coming soon on <a href={site.links.blog}>The Fusion Platform</a></li>}
           </ul>
         </div>
       </aside>
