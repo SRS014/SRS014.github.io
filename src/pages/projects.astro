@@ -14,6 +14,7 @@ import { projects } from "../data/profile";
       <div class="grid two">
         {projects.map((p) => (
           <article class="card project-card">
+            <img class="card-thumb" src={p.screenshots[0].src} alt="" width="1280" height="724" loading="lazy" />
             <p class="eyebrow small-eyebrow">{p.area}</p>
             <h2 class="card-title"><a href={`/projects/${p.slug}/`}>{p.title}</a></h2>
             <p>{p.value}</p>

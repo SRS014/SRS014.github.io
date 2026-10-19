@@ -51,21 +51,26 @@ const related = p.related ? projects.find((x) => x.slug === p.related) : undefin
 
   <section class="section alt">
     <div class="wrap">
-      <div class="section-head"><h2>Architecture</h2></div>
-      <figure class="diagram">
-        <a href={p.diagram.src}><img src={p.diagram.src} alt={p.diagram.alt} width="1280" height="770" loading="lazy" /></a>
-        <figcaption class="small muted">Both apps share one Dataverse model. Select the diagram to open it full size.</figcaption>
-      </figure>
+      <div class="section-head"><h2>Screenshots</h2></div>
+      <p class="small muted" style="margin-top:-12px">From the test runs. All sites, equipment and inspections are fictional demo data.</p>
+      <div class="shots">
+        {p.screenshots.map((s) => (
+          <figure class="shot">
+            <a href={s.src}><img src={s.src} alt={s.alt} width="1280" height="724" loading="lazy" /></a>
+            <figcaption>{s.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><h2>Screenshots</h2></div>
-      <div class="card placeholder shot-placeholder">
-        <span class="flag">Coming soon</span>
-        <p style="margin:0">Screenshots from the final test run will go here.</p>
-      </div>
+      <div class="section-head"><h2>Architecture</h2></div>
+      <figure class="diagram">
+        <a href={p.diagram.src}><img src={p.diagram.src} alt={p.diagram.alt} width="1280" height="770" loading="lazy" /></a>
+        <figcaption class="small muted">Both apps share one Dataverse model. Select the diagram to open it full size.</figcaption>
+      </figure>
     </div>
   </section>
 </Base>
