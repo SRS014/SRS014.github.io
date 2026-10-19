@@ -218,7 +218,8 @@ export const projects: Project[] = [
       { src: shot("app1-01-home"), alt: "App 1 home screen: inspection counts, average risk score and a list of inspections with status and risk.", caption: "Home: every inspection with its status, risk band and which app built it." },
       { src: shot("app1-02-new-inspection"), alt: "New inspection screen with a site, a forklift and its criticality selected.", caption: "Guided start: pick a site, then the equipment. Criticality sets the score multiplier." },
       { src: shot("app1-03-critical-stop"), alt: "Checklist with the operator licence question answered No and the live risk panel showing 30 out of 100, Critical, critical stop.", caption: "One critical answer forces the Critical band, whatever the score." },
-      { src: shot("app1-04-review"), alt: "Review screen listing answers by stage and the risk score breakdown.", caption: "Review: answers by stage and how the score was built, before submit." },
+      { src: shot("app1-06-pen-markup"), alt: "Photo screen in annotate mode with freehand red strokes drawn over a photo of two spanners using the Pen input.", caption: "Canvas markup is the Pen input: freehand strokes only." },
+      { src: shot("app1-07-pen-saved"), alt: "Saved photo with the freehand strokes and a note that strokes are stored as a separate image.", caption: "The strokes save as a separate image, apart from the photo." },
       { src: shot("app1-05-submitted"), alt: "Home screen with a banner confirming the inspection was submitted with risk 30.0, Critical.", caption: "Submitted to Dataverse, and the counts update straight away." },
     ],
     related: "canvas-pcf-rules-driven-inspections",
@@ -248,6 +249,7 @@ export const projects: Project[] = [
     screenshots: [
       { src: shot("app2-01-home"), alt: "App 2 home screen listing inspections from both apps, one marked 30.0 Critical.", caption: "Same data, same screens: inspections from both apps side by side." },
       { src: shot("app2-03-checklist"), alt: "Checklist drawn by the React code component, with stage tabs, answers and a live risk panel explaining the score.", caption: "The checklist and live risk panel are one React code component inside the Canvas screen." },
+      { src: shot("app2-05-annotator"), alt: "PhotoAnnotator code component with numbered markers, an arrow, a box and freehand marks on a photo of two spanners, and a toolbar of tools and colours.", caption: "The PhotoAnnotator component: numbered markers, arrows, boxes, freehand and notes." },
       { src: shot("app2-02-new-inspection"), alt: "New inspection screen in App 2 with a site and forklift selected.", caption: "Everything around the components stays plain Canvas." },
       { src: shot("app2-04-review"), alt: "Review screen in App 2 with 3 of 14 visible questions answered and a risk score of 0.0, Low.", caption: "Review reads the component's outputs: 14 visible questions, not the whole template." },
     ],
