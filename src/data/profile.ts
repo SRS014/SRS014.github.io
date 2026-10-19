@@ -178,6 +178,7 @@ export type Project = {
   problem: string;
   solution: string[];
   result: string[];
+  findings?: string[];
   role: string;
   tags: string[];
   repo: string;
@@ -203,7 +204,8 @@ export const projects: Project[] = [
       "Seven Dataverse tables, with the checklist stored as a self-referencing question tree and the conditions held as data.",
       "Five Canvas screens: inspection list, guided start, staged checklist, photos with Pen markup, and review and submit.",
       "A live score in Power Fx: weights, an equipment-criticality multiplier, a cap at 100 and critical stops.",
-      "Every limit documented with evidence from the build, then confirmed in three Monitor-traced test runs.",
+      "Visibility is one named formula per level of the tree, because Power Fx functions can't call themselves.",
+      "Every limit documented with evidence from the build, then confirmed in three test runs traced with Live monitor.",
     ],
     result: [
       "Signed off after three traced test runs.",
@@ -211,7 +213,7 @@ export const projects: Project[] = [
       "Those limits became the brief for the PCF version.",
     ],
     role: "Sole builder: data model, provisioning scripts, Canvas app, testing and write-up.",
-    tags: ["Power Apps (Canvas)", "Power Fx", "Dataverse", "Monitor", "Git"],
+    tags: ["Power Apps (Canvas)", "Power Fx", "Dataverse", "Live monitor", "Git"],
     repo: inspectionRepo,
     diagram: inspectionDiagram,
     screenshots: [
@@ -240,7 +242,12 @@ export const projects: Project[] = [
     result: [
       "No depth limit: the sixth-level critical question shows and scores.",
       "15 unit tests cover the scoring engine and the Canvas data contract.",
-      "Testing caught a real issue: explicit column selection dropped columns that reached the component only through JSON. Naming every column fixed it.",
+      "Testing in the real app caught three issues the local test harness hid. Each one is fixed; details below.",
+    ],
+    findings: [
+      "No redraw after a click (test 1, 18 October 2026). In the canvas app, updateView didn't run after notifyOutputChanged when no input had changed, so clicks updated the answers but not the screen. The local test harness did redraw, which hid it. Fix: the React view re-renders itself through a small store.",
+      "Wrong width in auto-layout (test 1, 18 October 2026). Inside an auto-layout container, allocatedWidth matched the control's Width property, not its laid-out width, so the question column collapsed. Fix: the views fill 100% of the control's box.",
+      "Columns never fetched (test 3, 18 October 2026, Live monitor trace). The questions reached the component only through JSON(DropColumns(colQ, Rec)). The question query fetched 9 columns; the parent, condition, weight and option columns were never requested. Every question showed and the risk score stayed at 0. Fix: name every column with JSON(ShowColumns(colQ, ...)).",
     ],
     role: "Sole builder: component design, React + TypeScript, Canvas integration, deployment and testing.",
     tags: ["Power Apps (Canvas)", "PCF", "React", "TypeScript", "Fluent UI v9", "Dataverse", "Power Platform CLI"],

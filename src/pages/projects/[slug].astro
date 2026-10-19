@@ -30,6 +30,13 @@ const related = p.related ? projects.find((x) => x.slug === p.related) : undefin
 
         <h2 class="case-h">The result</h2>
         <ul class="list">{p.result.map((s) => <li>{s}</li>)}</ul>
+
+        {p.findings && (
+          <>
+            <h2 class="case-h">What testing found</h2>
+            <ul class="list">{p.findings.map((s) => <li>{s}</li>)}</ul>
+          </>
+        )}
       </div>
 
       <aside class="case-side" aria-label="Project facts">
