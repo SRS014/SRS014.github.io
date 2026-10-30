@@ -1,0 +1,93 @@
+WEBVTT
+
+1
+00:00:00.001 --> 00:00:08.827
+Hi, I'm Sohan. This is Procurement Approvals, a proof of concept I built on Microsoft Power Platform.
+
+2
+00:00:08.827 --> 00:00:14.077
+It takes a purchase order from request to approval without one forwarded email.
+
+3
+00:00:14.091 --> 00:00:19.139
+In a lot of companies, a purchase order still travels by email.
+
+4
+00:00:19.139 --> 00:00:25.398
+It goes to the manager, then finance, then procurement, and nobody can see where it's stuck.
+
+5
+00:00:25.424 --> 00:00:30.554
+Here's the app as Abdullah, an IT engineer who needs to buy something.
+
+6
+00:00:30.554 --> 00:00:37.132
+He sees his own orders, what's waiting in approval, and the spend approved so far this year.
+
+7
+00:00:37.137 --> 00:00:43.162
+He picks the vendor. Only vendors that procurement has approved are on this list.
+
+8
+00:00:43.162 --> 00:00:50.013
+He enters sixty-one thousand eight hundred riyals, and the panel on the right shows the route straight away.
+
+9
+00:00:50.013 --> 00:00:57.743
+Three approvals, because it's over fifty thousand. A short justification, and he submits.
+
+10
+00:00:57.755 --> 00:01:06.369
+A Power Automate flow takes over. It checks the order, opens the first approval step, and emails the manager.
+
+11
+00:01:14.323 --> 00:01:21.169
+For the demo, I can act as each person. This is Khalid, the IT manager.
+
+12
+00:01:21.169 --> 00:01:28.821
+He approves from the order itself, with a comment, and a second flow moves it on to finance within seconds.
+
+13
+00:01:28.833 --> 00:01:34.478
+Huda, the finance director, sees a budget check the flow wrote for her.
+
+14
+00:01:34.478 --> 00:01:39.917
+How much IT has already spent this year, and where this order would take it.
+
+15
+00:01:41.328 --> 00:01:46.673
+Turki in procurement signs off last, and the order is fully approved.
+
+16
+00:01:46.673 --> 00:01:52.644
+A final flow emails Abdullah and books a processing slot on the next Saudi working day.
+
+17
+00:01:52.649 --> 00:01:59.193
+Every step lands in the audit trail: who did what, and when, in Riyadh time.
+
+18
+00:01:59.203 --> 00:02:04.817
+The vendor list keeps the commercial registration, the VAT number and a risk level.
+
+19
+00:02:04.817 --> 00:02:08.603
+High-risk vendors get a warning on every approval.
+
+20
+00:02:08.616 --> 00:02:13.920
+Approvers aren't always at a desk, so the same app works on a phone.
+
+21
+00:02:13.926 --> 00:02:21.219
+Under the hood it's six Dataverse tables, one canvas app and four flows. No custom code.
+
+22
+00:02:21.219 --> 00:02:27.609
+Everything here is sample data in a developer environment, but the flow times you saw are real.
+
+23
+00:02:27.622 --> 00:02:36.153
+The full build, the tests and the scripts are on my GitHub, and there's more on my portfolio. Thanks for watching.

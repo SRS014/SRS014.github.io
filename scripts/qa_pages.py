@@ -16,7 +16,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST, OUT = ROOT / "dist", ROOT / "screenshots"
-PAGES = ["/", "/about/", "/experience/", "/projects/", "/projects/canvas-equipment-inspections/", "/projects/canvas-pcf-rules-driven-inspections/", "/certifications/", "/writing/", "/contact/", "/resume/", "/404.html"]
+PAGES = ["/", "/about/", "/experience/", "/projects/", "/projects/procurement-approvals/", "/projects/canvas-equipment-inspections/", "/projects/canvas-pcf-rules-driven-inspections/", "/certifications/", "/writing/", "/contact/", "/resume/", "/404.html"]
 WIDTHS = [360, 768, 1280]
 AXE = (ROOT / "node_modules" / "axe-core" / "axe.min.js").read_text(encoding="utf-8")
 

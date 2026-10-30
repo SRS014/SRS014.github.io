@@ -167,6 +167,9 @@ dl.fields dd { margin: 0 0 6px; color: var(--color-text-muted); font-size: 0.92r
 .diagram { margin: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 12px; }
 .diagram img { width: 100%; border-radius: 8px; }
 .diagram figcaption { margin-top: 10px; }
+.video { margin: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 10px; }
+.video video { display: block; width: 100%; height: auto; border-radius: 8px; background: #0F2530; }
+.video figcaption { margin: 10px 4px 2px; }
 .shots { display: grid; gap: 20px; }
 @media (min-width: 860px) { .shots { grid-template-columns: repeat(2, 1fr); } }
 .shot { margin: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 10px; }

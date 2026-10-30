@@ -21,6 +21,22 @@ const codeParts = (s: string) => s.split("`").map((text, i) => ({ text, code: i 
     </div>
   </div></section>
 
+  {p.video && (
+    <section class="section alt" aria-labelledby="demo-video">
+      <div class="wrap">
+        <div class="section-head"><h2 id="demo-video">Demo video</h2></div>
+        <figure class="video">
+          <video controls preload="metadata" poster={p.video.poster} width="1280" height="720">
+            <source src={p.video.src} type="video/mp4" />
+            <track kind="captions" src={p.video.captions} srclang="en" label="English" /> {/* captions are burned in; the track is for screen readers and search, off by default */}
+            <a href={p.video.src}>Download the demo video</a>
+          </video>
+          <figcaption class="small muted">{p.video.title}{p.video.note && <> {p.video.note}</>}</figcaption>
+        </figure>
+      </div>
+    </section>
+  )}
+
   <section class="section">
     <div class="wrap case">
       <div class="case-main">
@@ -72,7 +88,7 @@ const codeParts = (s: string) => s.split("`").map((text, i) => ({ text, code: i 
   <section class="section alt">
     <div class="wrap">
       <div class="section-head"><h2>Screenshots</h2></div>
-      <p class="small muted" style="margin-top:-12px">From the test runs. All sites, equipment and inspections are fictional demo data.</p>
+      <p class="small muted" style="margin-top:-12px">{p.shotsNote ?? "From the test runs. All sites, equipment and inspections are fictional demo data."}</p>
       <div class="shots">
         {p.screenshots.map((s) => (
           <figure class="shot">
@@ -89,7 +105,7 @@ const codeParts = (s: string) => s.split("`").map((text, i) => ({ text, code: i 
       <div class="section-head"><h2>Architecture</h2></div>
       <figure class="diagram">
         <a href={p.diagram.src}><img src={p.diagram.src} alt={p.diagram.alt} width="1280" height="770" loading="lazy" /></a>
-        <figcaption class="small muted">Both apps share one Dataverse model. Select the diagram to open it full size.</figcaption>
+        <figcaption class="small muted">{p.diagramNote ?? "Both apps share one Dataverse model."} Select the diagram to open it full size.</figcaption>
       </figure>
     </div>
   </section>

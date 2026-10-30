@@ -182,20 +182,98 @@ export type Project = {
   findings?: { title: string; happened: string; fix: string }[];
   findingsIntro?: string;
   blog?: { title: string; url: string };
+  // Demo video with burned-in captions; `captions` is a WebVTT track for screen readers and search
+  video?: { src: string; poster: string; captions: string; title: string; note?: string };
   role: string;
   tags: string[];
   repo: string;
   diagram: { src: string; alt: string };
   screenshots: { src: string; alt: string; caption: string }[];
+  shotsNote?: string;
+  diagramNote?: string;
   related?: string;
 };
 const shot = (name: string) => `/projects/canvas-vs-pcf/shots/${name}.webp`;
+const pshot = (name: string) => `/projects/procurement-approvals/shots/${name}.webp`;
+const PROCUREMENT_SHOTS = [
+  { src: pshot("01-home"), alt: "Home screen for a requester: four KPI cards, his purchase orders with status badges, and recent activity across all orders.", caption: "Home: KPIs, the requester's own orders, and what just happened." },
+  { src: pshot("02-new-po"), alt: "New purchase order form for SAR 61,800 with Najd Digital Systems, and an approval route panel listing three approvers in order.", caption: "As the amount goes in, the route shows who will approve it." },
+  { src: pshot("03-finance"), alt: "Purchase order detail as the Finance Director: the approval chain, the high-risk vendor warning and a budget check line above Approve and Reject buttons.", caption: "The finance step comes with a budget check written by a flow." },
+  { src: pshot("04-chain"), alt: "Purchase order detail showing two approved steps and the Procurement Head step pending, with vendor details and the decision panel.", caption: "The chain shows who approved, when (Riyadh time) and what they said." },
+  { src: pshot("05-list"), alt: "Purchase order list with search, status, department, vendor and date filters, and colour-coded status badges.", caption: "Every order, filterable by queue, status, department, vendor and date." },
+  { src: pshot("06-vendors"), alt: "Vendor management screen with risk and status badges, and a high-risk security vendor's details and purchase history.", caption: "Vendors carry CR, VAT, risk and status; only approved vendors can be ordered from." },
+];
 const inspectionRepo = "https://github.com/SRS014/canvas-vs-pcf-inspection";
 const inspectionDiagram = {
   src: "/projects/canvas-vs-pcf/architecture.svg",
   alt: "Architecture: inspectors use App 1 (Canvas only) and App 2 (Canvas with two React code components). Both apps read and write seven Dataverse tables. Source and deployment scripts live in GitHub.",
 };
 export const projects: Project[] = [
+  {
+    slug: "procurement-approvals",
+    title: "Procurement Approvals on Power Platform",
+    value: "Vendor and purchase-order approvals that route themselves: one canvas app, six Dataverse tables and four Power Automate flows, tested end to end with Playwright.",
+    area: "Power Apps Canvas + Dataverse + Power Automate",
+    problem:
+      "A Saudi company approves purchase orders by forwarding emails: manager, then finance, then procurement. Nobody can see where an order is stuck, vendor details sit in a spreadsheet, and there's no record of who approved what.",
+    solution: [
+      "Six Dataverse tables: vendors with CR number, VAT number, risk and status; purchase orders with an autonumber PO-YYYYMM-########; one approval row per step; and an audit trail.",
+      "A five-screen canvas app: dashboard, new PO with a live route preview, PO list with filters, PO detail with the approval chain and the decision panel, and vendor management. It works down to phone width.",
+      "Four Power Automate flows do the routing. Under SAR 50,000 the manager decides. At or above it, finance and procurement follow. The threshold is an environment variable.",
+      "The finance step gets a budget check written by a flow: the department's approved spend this year against its budget. Approvers get an email that opens the PO in the app.",
+      "When the last approval lands, a flow emails the requester the chain and books a processing slot on the next Saudi working day (Sunday to Thursday).",
+      "Everything is scripted: the schema, the sample data and the flows through the Dataverse Web API, and the canvas app as YAML generated from one Python file.",
+    ],
+    result: [
+      "19 automated Playwright tests pass against the published app. They act as every persona and check each flow's result in Dataverse, not just the screen.",
+      "Measured across five full test runs: after each approval, the next step opened in 4 to 7 seconds. The approval-request email took 7 to 24 seconds to send and log.",
+      "Testing found five issues that a compile and the App Checker didn't. All five are fixed; see What testing found below.",
+    ],
+    findingsIntro: "Found by the Playwright suite against the published app on 31 October 2026. Every formula compiled cleanly, and App Checker reported nothing.",
+    findings: [
+      {
+        title: "The whole app rendered at half size",
+        happened: "The app began as a phone-format canvas. With the App layout set to Responsive, phone canvases count two design units per screen pixel, so `App.Width` was 2000 in a 1000 px window. Everything drew at half size, and a 390 px phone missed the phone layout.",
+        fix: "The generator writes every size in screen pixels and multiplies it by `SCALE = 2`; the phone breakpoint became `App.Width < 700 * SCALE`.",
+      },
+      {
+        title: "The first screen read the user before it was set",
+        happened: "New apps run `OnStart` without blocking the first screen, so for a moment Home read an empty `gblMe`. The requester's list title came up blank, or even as \"Waiting for your decision\".",
+        fix: "Screens read a named formula, `Me = Coalesce(gblMe, DefaultMe)`, which is calculated on demand and never empty.",
+      },
+      {
+        title: "The vendor picker showed empty rows",
+        happened: "The classic combo box listed 15 blank options for 7 vendors, so a requester couldn't choose a vendor. Its data was fine: a debug label showed all seven names.",
+        fix: "A classic drop-down fed by a named formula that names its columns: `ForAll(ApprovedVendors, Name)`.",
+      },
+      {
+        title: "The PO amount was blank on its own page",
+        happened: "The detail screen kept the purchase order in a variable, `gblPO`. In Play mode that record came back without its `'Amount (SAR)'` column, so the header showed \"SAR\" and nothing else. The name, dates and requester all showed fine.",
+        fix: "Read the amount with an explicit `LookUp(..., 'Amount (SAR)')` when the screen refreshes. A test now checks the header shows the right amount.",
+      },
+      {
+        title: "Clicking a row did nothing",
+        happened: "Gallery rows built from YAML didn't pass clicks up to the gallery, so selecting a purchase order in a list didn't open it.",
+        fix: "A transparent full-row button with `Select(Parent)`, which also gives each row a keyboard stop and a spoken label.",
+      },
+    ],
+    video: {
+      src: "/projects/procurement-approvals/procurement-approvals-demo.mp4",
+      poster: "/projects/procurement-approvals/procurement-approvals-demo-poster.jpg",
+      captions: "/projects/procurement-approvals/procurement-approvals-demo.vtt",
+      title: "A purchase order from request to approval, recorded by Playwright in the published app.",
+    },
+    role: "Sole builder: data model, provisioning scripts, canvas app, flows, Playwright tests and demo video.",
+    tags: ["Power Apps (Canvas)", "Power Fx", "Dataverse", "Power Automate", "Playwright", "Node.js", "Python"],
+    repo: "https://github.com/SRS014/procurement-approvals-power-platform",
+    diagram: {
+      src: "/projects/procurement-approvals/architecture.svg",
+      alt: "Architecture: a requester and three approvers use one canvas app that reads and writes six Dataverse tables. Flow 1 runs on Submit; Flows 2 to 4 are triggered by Dataverse rows and send email and calendar events through Outlook. A Playwright suite tests the published app.",
+    },
+    screenshots: PROCUREMENT_SHOTS,
+    shotsNote: "From the Playwright runs against the published app. All people, vendors and purchase orders are fictional sample data.",
+    diagramNote: "One canvas app, six tables, four flows.",
+  },
   {
     slug: "canvas-equipment-inspections",
     title: "Equipment Inspections in Canvas",
