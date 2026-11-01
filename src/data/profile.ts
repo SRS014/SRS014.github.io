@@ -304,7 +304,7 @@ export const projects: Project[] = [
       { src: shot("app1-03-critical-stop"), alt: "Checklist with the operator licence question answered No and the live risk panel showing 30 out of 100, Critical, critical stop.", caption: "One critical answer forces the Critical band, whatever the score." },
       { src: shot("app1-06-pen-markup"), alt: "Photo screen in annotate mode with freehand red strokes drawn over a photo of two spanners using the Pen input.", caption: "Canvas markup is the Pen input: freehand strokes only." },
       { src: shot("app1-07-pen-saved"), alt: "Saved photo with the freehand strokes and a note that strokes are stored as a separate image.", caption: "The strokes save as a separate image, apart from the photo." },
-      { src: shot("app1-05-submitted"), alt: "Home screen with a banner confirming the inspection was submitted with risk 30.0, Critical.", caption: "Submitted to Dataverse, and the counts update straight away." },
+      { src: shot("app1-05-submitted"), alt: "Home screen with a banner confirming the inspection was submitted with risk 45.0, Critical, and the counts updated.", caption: "Submitted to Dataverse, and the counts update straight away." },
     ],
     blog: { title: "When to Use Code Components in Canvas Apps", url: "https://thefusionplatform.wordpress.com/2026/10/19/when-to-use-code-components-in-canvas-apps/" },
     related: "canvas-pcf-rules-driven-inspections",
